@@ -521,10 +521,23 @@ async def back_main(callback: types.CallbackQuery):
 
 
 async def main():
-    logging.basicConfig(level=logging.INFO)
-    db.init_db()
-    await dp.start_polling(bot)
+   from aiohttp import web
 
+async def handle_ping(request):
+    return web.Response(text="Bot 24/7 ishlamoqda!")
+
+async def main():
+    # Render port talab qilgani uchun fonga kichik veb-server yoqamiz
+    app = web.Application()
+    app.router.add_get("/", handle_ping)
+    runner = web.AppRunner(app)
+    await runner.setup()
+    site = web.TCPSite(runner, "0.0.0.0", 10000)
+    await site.start()
+
+    # Botni ishga tushirish
+    await bot.delete_webhook(drop_pending_updates=True)
+    await dp.start_polling(bot)
 
 if __name__ == "__main__":
     asyncio.run(main())
