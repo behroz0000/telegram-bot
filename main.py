@@ -6,7 +6,7 @@ from aiogram.filters import Command, CommandStart
 from aiogram.fsm.context import FSMContext
 from aiogram.fsm.state import State, StatesGroup
 from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
-
+from aiohttp import web
 import database as db
 
 # ----------------- SOZLAMALAR -----------------
